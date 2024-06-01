@@ -13,7 +13,7 @@ const port = process.env.PORT || 8000
 app.use(express.json())
 app.use(
 	cors({
-		origin: ["https://c9-m4fo.vercel.app/", "https://c9-admin.vercel.app/"],
+		origin: ["https://c9-m4fo.vercel.app", "https://c9-admin.vercel.app"],
 		optionsSuccessStatus: 200,
 	})
 )
