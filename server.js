@@ -11,7 +11,12 @@ const port = process.env.PORT || 8000
 
 // middleware
 app.use(express.json())
-app.use(cors())
+app.use(
+	cors({
+		origin: "https://c9-backend.onrender.com", // Adjust to your frontend domain if needed
+		optionsSuccessStatus: 200,
+	})
+)
 
 // DB Connection
 connectDB()
