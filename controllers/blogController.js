@@ -1,10 +1,10 @@
 import blogModel from "../models/blogModel.js"
 import fs from "fs"
+import path from "path"
 
 // add Blog
 const addBlog = async (req, res) => {
 	let image_filename = `${req.file.filename}`
-
 	const blog = new blogModel({
 		title: req.body.title,
 		description: req.body.description,
@@ -29,12 +29,33 @@ const listBlog = async (req, res) => {
 	}
 }
 //remove food item
+// const removeBlog = async (req, res) => {
+// 	try {
+// 		const blog = await blogModel.findById(req.body.id)
+// 		fs.unlink(`upload/${blog.image}`, () => {})
+// 		await blogModel.findByIdAndDelete(req.body.id)
+// 		res.json({ success: true, message: "Blog Removed" })
+// 	} catch (error) {
+// 		console.log(error)
+// 		res.json({ success: false, message: error })
+// 	}
+// }
+
 const removeBlog = async (req, res) => {
 	try {
 		const blog = await blogModel.findById(req.body.id)
-		fs.unlink(`upload/${blog.image}`, () => {})
-		await blogModel.findByIdAndDelete(req.body.id)
-		res.json({ success: true, message: "Blog Removed" })
+		if (blog) {
+			const imagePath = path.join("uploads", blog.image)
+			fs.unlink(imagePath, (err) => {
+				if (err) {
+					console.log(err)
+				}
+			})
+			await blogModel.findByIdAndDelete(req.body.id)
+			res.json({ success: true, message: "Blog Removed" })
+		} else {
+			res.json({ success: false, message: "Blog not found" })
+		}
 	} catch (error) {
 		console.log(error)
 		res.json({ success: false, message: error })
