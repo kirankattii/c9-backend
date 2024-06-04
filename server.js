@@ -8,6 +8,7 @@ import blogModel from "./models/blogModel.js"
 import fs from "fs" // Import fs module
 import path from "path" // Import path module
 import { fileURLToPath } from "url" // Import fileURLToPath
+
 dotenv.config()
 
 // Create __dirname equivalent
@@ -31,6 +32,7 @@ app.use(cors())
 
 // app.use("/images", express.static("uploads"))
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+
 // DB Connection
 connectDB()
 

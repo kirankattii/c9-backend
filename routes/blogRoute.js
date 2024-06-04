@@ -1,6 +1,11 @@
 import express from "express"
 import multer from "multer"
-import { addBlog, listBlog, removeBlog } from "../controllers/blogController.js"
+import {
+	addBlog,
+	listBlog,
+	removeBlog,
+	upload,
+} from "../controllers/blogController.js"
 
 const blogRouter = express.Router()
 
@@ -14,9 +19,24 @@ const storage = multer.diskStorage({
 	},
 })
 
-const upload = multer({
-	storage: storage,
-})
+// const upload = multer({
+// 	storage: storage,
+// 	fileFilter: (req, file, cb) => {
+// 		if (
+// 			file.mimetype == "image/jpeg" ||
+// 			file.mimetype == "image/jpg" ||
+// 			file.mimetype == "image/png" ||
+// 			file.mimetype == "image/gif"
+// 		) {
+// 			cb(null, true)
+// 		} else {
+// 			cb(null, false)
+// 			cb(new Error("Only jpeg,  jpg , png, and gif Image allow"))
+// 		}
+// 	},
+// })
+
+// blogRouter.post("/add", upload.single("image"), addBlog)
 
 blogRouter.post("/add", upload.single("image"), addBlog)
 blogRouter.get("/list", listBlog)
